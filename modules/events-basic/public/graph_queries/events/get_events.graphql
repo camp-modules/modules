@@ -1,0 +1,12 @@
+{
+  events: customizations(
+    name: "modules/events-basic/events"
+    per_page: 500
+    sort: [{ name: "properties.start", order: "ASC" }]
+  ) {
+    results {
+      id
+      properties
+    }
+  }
+}

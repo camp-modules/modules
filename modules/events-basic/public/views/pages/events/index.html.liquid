@@ -1,0 +1,25 @@
+---
+slug: events-basic/events
+layout_name: modules/events-basic/default
+---
+
+{%- assign event_id = context.params.slug3 -%}
+
+{%- if event_id -%}
+
+  <h2>Update Event</h2>
+  {%- include_form "modules/events-basic/create_event", id: event_id -%}
+  {%- include_form "modules/events-basic/delete_event", id: event_id -%}
+
+{%- else -%}
+
+  <h1>Events</h1>
+  <hr>
+  <h2>Create New Event</h2>
+  {%- include_form "modules/events-basic/create_event" -%}
+  <hr>
+  <h2>All Events</h2>
+  {% graphql events = 'modules/events-basic/get_events' | dig: "events", "results" -%}
+  {% include "modules/events-basic/events/list", events: events -%}
+
+{%- endif -%}

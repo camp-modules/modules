@@ -1,0 +1,39 @@
+---
+name: create_event
+resource: modules/events-basic/events
+resource_owner: anyone
+redirect_to: events-basic/events
+configuration:
+  properties:
+    description:
+    end:
+    start:
+    title:
+---
+{% form -%}
+  {% assign properties = form_builder.fields.properties -%}
+  <div>
+    <label for="form[properties_attributes][title]">Title:</label>
+    <input type="text" name="form[properties_attributes][title]" value="{{ properties.title.value }}">
+  </div>
+
+  <div>
+    <label for="form[properties_attributes][start]">Start:</label>
+    <input type="datetime-local" name="form[properties_attributes][start]" value="{{ properties.start.value | date: '%Y-%m-%dT%H:%M' }}">
+  </div>
+
+  <div>
+    <label for="form[properties_attributes][end]">End:</label>
+    <input type="datetime-local" name="form[properties_attributes][end]" value="{{ properties.end.value | date: '%Y-%m-%dT%H:%M' }}">
+  </div>
+
+  <div>
+    <label for='form[properties_attributes][description]'>Description:</label><br>
+    <textarea name='form[properties_attributes][description]' rows='12' cols='150'>{{ properties.description.value }}</textarea>
+  </div>
+
+  <div>
+    <input type='submit' value='Submit'>
+  </div>
+
+{% endform -%}

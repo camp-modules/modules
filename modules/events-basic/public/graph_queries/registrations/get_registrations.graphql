@@ -1,0 +1,16 @@
+{
+  registrations: customizations(
+    name: "modules/events-basic/registrations"
+    per_page: 500
+  ) {
+    results {
+      id
+      created_at
+      event_id: property(name: "event_id")
+      user_id: property(name: "user_id")
+      events: model(join_on_property: "event_id") {
+        properties
+      }
+    }
+  }
+}

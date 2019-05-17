@@ -1,0 +1,37 @@
+---
+name: create_registration
+resource: modules/events-basic/registrations
+resource_owner: anyone
+redirect_to: events-basic/registrations
+configuration:
+  properties:
+    event_id:
+    user_id:
+---
+{%- graphql collection = "modules/events-basic/get_users_and_events" -%}
+{%- assign events = collection.events.results -%}
+{%- assign users = collection.users.results -%}
+
+{%- form -%}
+  {%- assign properties = form_builder.fields.properties -%}
+  <div>
+    <select name="form[properties_attributes][event_id]" >
+      <option value="">-- Select Event --</option>
+      {% for event in events -%}
+      <option value="{{ event.id }}"{% if properties.event_id.value == event.id %} selected{% endif -%}>{{ event.title }}</option>
+      {% endfor -%}
+    </select>
+  </div>
+  <div>
+    <select name="form[properties_attributes][user_id]" >
+      <option value="">-- Select User --</option>
+      {% for user in users -%}
+      <option value="{{ user.id }}"{% if properties.user_id.value == user.id %} selected{% endif -%}>{{ user.email }}</option>
+      {% endfor -%}
+    </select>
+  </div>
+  <div>
+    <input type='submit' value='Submit'>
+  </div>
+
+{%- endform -%}

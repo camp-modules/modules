@@ -1,0 +1,18 @@
+<table border="1" cellpadding="5">
+<thead>
+  <tr>
+    <th>Reg ID</th>
+    <th>User ID</th>
+    <th>Event ID</th>
+    <th>Event Title</th>
+  </tr>
+</thead>
+{%- for registration in registrations -%}
+  <tr>
+    <td><a href="/events-basic/registrations/{{ registration.id }}">{{ registration.id }}</a></td>
+    <td><a href="/users/{{ registration.user_id }}">{{ registration.user_id }}</a></td>
+    <td><a href="/events-basic/events/{{ registration.event_id }}">{{ registration.event_id }}</a></td>
+    <td>{{ registration.events.properties.title }}</td>
+  </tr>
+{%- endfor -%}
+</table>

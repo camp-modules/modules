@@ -1,0 +1,16 @@
+---
+name: delete_user
+resource: User
+resource_owner: anyone
+redirect_to: users
+fields:
+  deleted_at: null
+default_payload: |-
+  {%- assign date_now = 'now' | date: '%Y-%m-%dT%H:%M:%S' -%}
+  {
+    "deleted_at": "{{ date_now }}"
+  }
+---
+{% form %}
+  <button>Delete User</button>
+{% endform %}

@@ -1,0 +1,7 @@
+name: registrations
+properties:
+  - name: event_id
+    type: string
+    belongs_to: events
+  - name: user_id
+    type: string

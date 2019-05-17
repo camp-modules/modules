@@ -1,0 +1,26 @@
+---
+slug: users
+---
+
+{%- assign user_id = context.params.slug2 -%}
+{%- if user_id -%}
+
+  <h2>Update User</h2>
+  {% include_form "create_user", id: user_id %}
+  {% include_form "delete_user", id: user_id %}
+
+{%- else -%}
+
+  <h1>Users</h1>
+  <hr>
+  <h2>Create New User</h2>
+  {% include_form "create_user" %}
+
+  <hr>
+  <h2>All Users</h2>
+
+  {%- graphql users = "get_users" | dig: "people", "results" %}
+
+  {% include "users/list", users: users %}
+
+{%- endif -%}

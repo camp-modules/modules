@@ -1,0 +1,11 @@
+{
+  people(per_page: 500, user: { is_deleted: false }) {
+    results {
+      deleted_at
+      id
+      email
+      first_name
+      last_name
+    }
+  }
+}

@@ -1,0 +1,10 @@
+---
+name: delete_registration
+resource: modules/events-basic/registrations
+resource_owner: anyone
+fields:
+return_to: events-basic/registrations
+---
+{% form method: 'delete' %}
+  <button>Delete Registration</button>
+{% endform %}

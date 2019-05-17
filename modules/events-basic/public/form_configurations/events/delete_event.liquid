@@ -1,0 +1,10 @@
+---
+name: delete_event
+resource: modules/events-basic/events
+resource_owner: anyone
+fields:
+return_to: events-basic/events
+---
+{% form method: 'delete' %}
+  <button>Delete Event</button>
+{% endform %}

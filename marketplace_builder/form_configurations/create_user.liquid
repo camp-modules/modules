@@ -1,0 +1,29 @@
+---
+name: create_user
+resource: User
+resource_owner: anyone
+redirect_to: users
+fields:
+  email:
+  first_name:
+  last_name:
+---
+{%- form %}
+
+  {% assign fields = form_builder.fields -%}
+
+  <div>
+      <label for="form[first_name]">First Name</label>
+      <input type="text" name="form[first_name]" value="{{ fields.first_name.value }}">
+  </div>
+  <div>
+      <label for="form[last_name]">Last Name</label>
+      <input type="text" name="form[last_name]" value="{{ fields.last_name.value }}">
+  </div>
+  <div>
+      <label for="form[email]">Email Address</label>
+      <input type="email" name="form[email]" value="{{ fields.email.value }}" required>
+  </div>
+  <input type="submit" value="Submit">
+  
+{% endform -%}

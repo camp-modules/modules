@@ -1,0 +1,10 @@
+name: events
+properties:
+  - name: description
+    type: text
+  - name: end
+    type: datetime
+  - name: start
+    type: datetime
+  - name: title
+    type: string

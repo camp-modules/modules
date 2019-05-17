@@ -1,0 +1,18 @@
+{
+  events: customizations(
+    name: "modules/events-basic/events"
+    per_page: 500
+    sort: [{ name: "properties.start", order: "ASC" }]
+  ) {
+    results {
+      id
+      title: property(name: "title")
+    }
+  }
+  users: people(per_page: 500, user: { is_deleted: false }) {
+    results {
+      id
+      email
+    }
+  }
+}

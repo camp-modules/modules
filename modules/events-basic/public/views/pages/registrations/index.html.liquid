@@ -1,0 +1,25 @@
+---
+slug: events-basic/registrations
+layout_name: modules/events-basic/default
+---
+
+{%- assign registration_id = context.params.slug3 -%}
+
+{%- if registration_id -%}
+
+  <h2>Update Registration</h2>
+  {%- include_form "modules/events-basic/create_registration", id: registration_id -%}
+  {%- include_form "modules/events-basic/delete_registration", id: registration_id -%}
+
+{%- else -%}
+
+  <h1>Registrations</h1>
+  <hr>
+  <h2>Create New Registration</h2>
+  {%- include_form "modules/events-basic/create_registration" -%}
+  <hr>
+  <h2>All Registrations</h2>
+  {%- graphql registrations = "modules/events-basic/get_registrations" | dig: "registrations", "results" -%}
+  {%- include "modules/events-basic/registrations/list", registrations: registrations -%}
+
+{%- endif -%}
