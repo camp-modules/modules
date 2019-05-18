@@ -10,7 +10,9 @@ configuration:
     start:
     title:
 ---
+  {%- comment -%} This form is used to both create and update event {%- endcomment -%}
 {% form -%}
+  {%- comment -%} Create variable and assign fields properties {%- endcomment -%}
   {% assign properties = form_builder.fields.properties -%}
   <div>
     <label for="form[properties_attributes][title]">Title:</label>
