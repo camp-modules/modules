@@ -10,7 +10,10 @@ configuration:
     start:
     title:
 ---
-  {%- comment -%} This form is used to both create and update event {%- endcomment -%}
+{%- comment -%}
+  - This form is used to both create and update event
+  - Update resource_owner to prevent anyone from creating/updating an event
+{%- endcomment -%}
 {% form -%}
   {%- comment -%} Create variable and assign fields properties {%- endcomment -%}
   {% assign properties = form_builder.fields.properties -%}

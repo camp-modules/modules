@@ -8,6 +8,11 @@ configuration:
     event_id:
     user_id:
 ---
+{%- comment -%}
+  - This form is used to both create and update registration
+  - Update resource_owner to prevent anyone from creating/updating
+  - Fetch users and events to populate dropdowns
+{%- endcomment -%}
 {%- graphql collection = "modules/events-basic/get_users_and_events" -%}
 {%- assign events = collection.events.results -%}
 {%- assign users = collection.users.results -%}

@@ -5,6 +5,10 @@ resource_owner: anyone
 fields:
 return_to: events-basic/events
 ---
+{%- comment -%}
+  - This form is used to delete an event
+  - Update resource_owner to prevent anyone from deleting event
+{%- endcomment -%}
 {% form method: 'delete' %}
   <button>Delete Event</button>
 {% endform %}

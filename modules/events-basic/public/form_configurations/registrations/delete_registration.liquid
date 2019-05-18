@@ -5,6 +5,10 @@ resource_owner: anyone
 fields:
 return_to: events-basic/registrations
 ---
+{%- comment -%}
+  - This form is used to delete a registration
+  - Update resource_owner to prevent anyone from deleting
+{%- endcomment -%}
 {% form method: 'delete' %}
   <button>Delete Registration</button>
 {% endform %}
