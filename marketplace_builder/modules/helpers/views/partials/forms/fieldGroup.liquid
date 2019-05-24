@@ -1,0 +1,27 @@
+{% if field -%}
+	{% assign unique = 'today' | date: '%N' -%}
+	{% capture attributes %}
+		{{attributes | replace: ',', ' '}}
+		{% if field.property_options.readonly == true %} readonly="true"{% endif %}
+	{% endcapture %}
+	{% assign fieldValue = value | default: field.value %}
+	{% if type == 'hidden' %}
+		<input type="{{type}}" id="{{field.name}}{{unique}}" name="{{field.name}}" value="{{fieldValue}}"{{attributes}}>
+	{% else %}
+		<div class="validation-group {% if field.validation.errors.size > 0 -%}error{% endif -%}">
+			{% if label %}<label for="{{field.name}}{{unique}}" class="validation-label">{{label}}</label>{% endif %}
+			{% if type == 'textarea' -%}
+				<textarea id="{{field.name}}{{unique}}" class="validation-input" name="{{field.name}}"{{attributes}}>{{fieldValue}}</textarea>
+			{% elsif type == 'select' -%}
+				<select id="{{field.name}}{{unique}}" class="validation-input" name="{{field.name}}{% if fieldValue.first %}[]{% endif %}"{{attributes}}>
+					{% for option in options %}
+						<option value="{{option.id}}" {% if fieldValue == option.id %}selected="selected"{% elsif fieldValue.first and fieldValue contains option.id %}selected="selected"{% endif %}>{{option.name}}</option>
+					{% endfor %}
+				</select>
+			{% else -%}
+				<input type="{{type}}" class="validation-input" id="{{field.name}}{{unique}}" name="{{field.name}}" value="{{fieldValue}}"{{attributes}}>
+			{% endif -%}
+			{% include 'modules/helpers/forms/validation', errors: field.validation.errors -%}
+		</div>
+	{% endif %}
+{% endif -%}
