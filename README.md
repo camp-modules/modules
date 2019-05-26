@@ -1,5 +1,7 @@
 # Modules
 
+[![Build Status](https://digitalfuel.visualstudio.com/Camp%20Crud/_apis/build/status/camp-modules.modules?branchName=master)](https://digitalfuel.visualstudio.com/Camp%20Crud/_build/latest?definitionId=5&branchName=master)
+
 ## Events
 
 ### Basic
