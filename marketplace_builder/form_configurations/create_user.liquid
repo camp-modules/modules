@@ -12,11 +12,11 @@ fields:
 
   {% assign fields = form_builder.fields -%}
 
-  {%- include "modules/helpers/forms/input_text", name: "form[first_name]", label: "First Name", value: fields.first_name.value -%}
+  {%- include "modules/helpers/forms/fieldGroup", field: fields.first_name, label: "First Name", type: "text" -%}
 
-  {%- include "modules/helpers/forms/input_text", name: "form[last_name]", label: "Last Name", value: fields.last_name.value -%}
+  {%- include "modules/helpers/forms/fieldGroup", field: fields.last_name, label: "Last Name", type: "text" -%}
 
-  {%- include "modules/helpers/forms/input_email", name: "form[email]", label: "Email Address", value:  fields.email.value -%}
+  {%- include "modules/helpers/forms/fieldGroup", field: fields.email, label: "Email Address", type: "email" -%}
   
   <input type="submit" value="Submit">
   
