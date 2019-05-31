@@ -1,27 +1,52 @@
 {% if field -%}
 	{% assign unique = 'today' | date: '%N' -%}
-	{% capture attributes %}
-		{{attributes | replace: ',', ' '}}
-		{% if field.property_options.readonly == true %} readonly="true"{% endif %}
-	{% endcapture %}
+	{% capture classes %}validation-input {{classes | replace: ',', ' '}}{% endcapture %}
+	{% capture attributes %}{{attributes | replace: ',', ' '}}{% if field.property_options.readonly == true %} readonly="true"{% endif %}{% endcapture %}
 	{% assign fieldValue = value | default: field.value %}
+	{% capture label %}{% if label %}<label for="{{field.name}}{{unique}}" class="validation-label">{{label}}</label>{% endif %}{% endcapture %}
+	{% capture legend %}{% if label %}<legend class="validation-label">{{label}}</legend>{% endif %}{% endcapture %}
 	{% if type == 'hidden' %}
-		<input type="{{type}}" id="{{field.name}}{{unique}}" name="{{field.name}}" value="{{fieldValue}}"{{attributes}}>
+		<input type="{{type}}" id="{{field.name}}{{unique}}" class="{{classes}}" name="{{field.name}}" value="{{fieldValue}}"{{attributes}}>
 	{% else %}
-		<div {% if field.validation.errors.size > 0 -%}error{% endif -%}">
-			{% if label %}<label for="{{field.name}}{{unique}}">{{label}}</label>{% endif %}
+		<fieldset class="validation-group {% if field.validation.errors.size > 0 -%}error{% endif -%}">
 			{% if type == 'textarea' -%}
-				<textarea id="{{field.name}}{{unique}}" name="{{field.name}}"{{attributes}}>{{fieldValue}}</textarea>
+				{{label}}
+				<textarea id="{{field.name}}{{unique}}" class="{{classes}}" name="{{field.name}}"{{attributes}}>{{fieldValue}}</textarea>
 			{% elsif type == 'select' -%}
-				<select id="{{field.name}}{{unique}}" name="{{field.name}}{% if fieldValue.first %}[]{% endif %}"{{attributes}}>
+				{{label}}
+				{% if attributes == 'multiple' or attributes contains ' multiple ' %}<input type="hidden" name="{{field.name}}[]" value="" />{% endif %}
+				<select id="{{field.name}}{{unique}}" class="{{classes}}" name="{{field.name}}{% if options[1] %}[]{% endif %}"{{attributes}}>
 					{% for option in options %}
-						<option value="{{option.id}}" {% if fieldValue == option.id %}selected="selected"{% elsif fieldValue.first and fieldValue contains option.id %}selected="selected"{% endif %}>{{option.name}}</option>
+						<option value="{{option.id}}" {% if fieldValue == option.id %}selected="selected"{% elsif fieldValue[0] and fieldValue contains option.id %}selected="selected"{% endif %}>{{option.name}}</option>
 					{% endfor %}
 				</select>
+			{% elsif type == 'radio' %}
+				{{legend}}
+					<input type="hidden" name="{{field.name}}" value="">
+				{% for option in options %}
+					<input type="{{type}}" class="{{classes}}" id="{{field.name}}{{unique}}{% if fieldValue[0] %}_{{forloop.index0}}{% endif %}" name="{{field.name}}" value="{{option.id}}" {% if fieldValue == option.id %}checked="checked"{% endif %}><label for="{{field.name}}{{unique}}{% if fieldValue[0] %}_{{forloop.index0}}{% endif %}">{{option.name}}</label>
+				{% endfor %}
+			{% elsif type == 'checkbox' %}
+				{%- comment -%}If it's a boolean, set the hidden input to its opposite. Otherwise, leave it blank.{%- endcomment -%}
+				{% if options[0] == nil or options[1] == nil %}
+					{% if options[0] == nil %}{% assign boolVal = 'off' %}
+					{% elsif options[1] == nil %}
+						{% if options[0] == '1' or options[0] == 1 %}{% assign boolVal = '0' %}
+						{% elsif options[0] == 'true' or options[0] == true %}{% assign boolVal = 'false' %}
+						{% elsif options[0] == 'on' %}{% assign boolVal = 'off' %}
+						{% endif %}
+					{% endif %}					
+				{% endif %}
+				{{legend}}
+				<input type="hidden" name="{{field.name}}{% if options[1] %}[]{% endif %}" value="{{booVal}}">
+				{% for option in options %}
+					<input type="{{type}}" class="{{classes}}" id="{{field.name}}{{unique}}{% if fieldValue[0] %}_{{forloop.index0}}{% endif %}" name="{{field.name}}{% if options[1] %}[]{% endif %}" value="{{option.id}}" {% if fieldValue == option.id %}checked="checked"{% elsif fieldValue[0] and fieldValue contains option.id %}checked="checked"{% endif %}><label for="{{field.name}}{{unique}}{% if fieldValue[0] %}_{{forloop.index0}}{% endif %}">{{option.name}}</label>
+				{% endfor %}
 			{% else -%}
-				<input type="{{type}}" id="{{field.name}}{{unique}}" name="{{field.name}}" value="{{fieldValue}}"{{attributes}}>
+				{{label}}
+				<input type="{{type}}" class="{{classes}}" id="{{field.name}}{{unique}}" name="{{field.name}}" value="{{fieldValue}}"{{attributes}}>
 			{% endif -%}
-			{% include 'modules/helpers/forms/validation', errors: field.validation.errors -%}
-		</div>
+			{% include 'modules/users/forms/validation', errors: field.validation.errors -%}
+		</fieldset>
 	{% endif %}
 {% endif -%}
