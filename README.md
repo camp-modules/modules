@@ -4,7 +4,7 @@
 
 ## Events
 
-### Basic
+### Seats
 
 [Example Site](https://camp-events.staging.oregon.platform-os.com/)
 
