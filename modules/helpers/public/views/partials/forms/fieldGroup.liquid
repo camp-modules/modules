@@ -46,7 +46,7 @@
 				{{label}}
 				<input type="{{type}}" class="{{classes}}" id="{{field.name}}{{unique}}" name="{{field.name}}" value="{{fieldValue}}"{{attributes}}>
 			{% endif -%}
-			{% include 'modules/users/forms/validation', errors: field.validation.errors -%}
+			{% include 'modules/helpers/forms/validation', errors: field.validation.errors -%}
 		</fieldset>
 	{% endif %}
 {% endif -%}

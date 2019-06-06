@@ -19,6 +19,12 @@ configuration:
 
 {%- form -%}
   {%- assign properties = form_builder.fields.properties -%}
+
+  {%- include "modules/helpers/forms/fieldGroup", field: properties.event_id, label: "Event", type: "select", options: events -%}
+
+  {%- include "modules/helpers/forms/fieldGroup", field: properties.user_id, label: "Users", type: "select", options: users -%}
+
+{%- comment -%}
   <div>
     <select name="form[properties_attributes][event_id]" >
       <option value="">-- Select Event --</option>
@@ -35,6 +41,8 @@ configuration:
       {% endfor -%}
     </select>
   </div>
+{%- endcomment -%}
+
   <div>
     <input type='submit' value='Submit'>
   </div>

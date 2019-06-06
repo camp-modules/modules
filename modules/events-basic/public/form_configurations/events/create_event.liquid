@@ -17,11 +17,12 @@ configuration:
 {% form -%}
   {%- comment -%} Create variable and assign fields properties {%- endcomment -%}
   {% assign properties = form_builder.fields.properties -%}
-  <div>
-    <label for="form[properties_attributes][title]">Title:</label>
-    <input type="text" name="form[properties_attributes][title]" value="{{ properties.title.value }}">
-  </div>
 
+  {%- include "modules/helpers/forms/fieldGroup", field: properties.title, label: "Title", type: "text" -%}
+  {%- include "modules/helpers/forms/fieldGroup", field: properties.start, label: "Start", type: "datetime-local" -%}
+  {%- include "modules/helpers/forms/fieldGroup", field: properties.end, label: "End", type: "datetime-local" -%}
+
+  {%- comment -%}
   <div>
     <label for="form[properties_attributes][start]">Start:</label>
     <input type="datetime-local" name="form[properties_attributes][start]" value="{{ properties.start.value | date: '%Y-%m-%dT%H:%M' }}">
@@ -31,11 +32,9 @@ configuration:
     <label for="form[properties_attributes][end]">End:</label>
     <input type="datetime-local" name="form[properties_attributes][end]" value="{{ properties.end.value | date: '%Y-%m-%dT%H:%M' }}">
   </div>
+  {%- endcomment -%}
 
-  <div>
-    <label for='form[properties_attributes][description]'>Description:</label><br>
-    <textarea name='form[properties_attributes][description]' rows='12' cols='150'>{{ properties.description.value }}</textarea>
-  </div>
+  {%- include "modules/helpers/forms/fieldGroup", field: properties.description, label: "Description", type: "textarea" -%}
 
   <div>
     <input type='submit' value='Submit'>
