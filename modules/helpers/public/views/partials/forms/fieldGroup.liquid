@@ -14,7 +14,7 @@
 				<textarea id="{{field.name}}{{unique}}" class="{{classes}}" name="{{field.name}}"{{attributes}}>{{fieldValue}}</textarea>
 			{% elsif type == 'select' -%}
 				{{label}}
-				{% if attributes == 'multiple' or attributes contains ' multiple ' %}<input type="hidden" name="{{field.name}}[]" value="" />{% endif %}
+				{% if attributes == 'multiple' or attributes contains 'multiple' %}<input type="hidden" name="{{field.name}}[]" value="" />{% endif %}
 				<select id="{{field.name}}{{unique}}" class="{{classes}}" name="{{field.name}}{% if options[1] %}[]{% endif %}"{{attributes}}>
 					{% for option in options %}
 						<option value="{{option.id}}" {% if fieldValue == option.id %}selected="selected"{% elsif fieldValue[0] and fieldValue contains option.id %}selected="selected"{% endif %}>{{option.name}}</option>
