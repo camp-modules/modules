@@ -17,7 +17,7 @@
 				{% if attributes == 'multiple' or attributes contains 'multiple' %}<input type="hidden" name="{{field.name}}[]" value="" />{% endif %}
 				<select id="{{field.name}}{{unique}}" class="{{classes}}" name="{{field.name}}{% if options[1] %}[]{% endif %}"{{attributes}}>
 					{% for option in options %}
-						<option value="{{option.id}}" {% if fieldValue == option.id %}selected="selected"{% elsif fieldValue[0] and fieldValue contains option.id %}selected="selected"{% endif %}>{{option.name}}</option>
+						<option value="{{ option[option_value_property] | default: option.id }}" {% if fieldValue == option.id %}selected="selected"{% elsif fieldValue[0] and fieldValue contains option.id %}selected="selected"{% endif %}>{{ option[option_text_property] | default: option.name }}</option>
 					{% endfor %}
 				</select>
 			{% elsif type == 'radio' %}
@@ -42,6 +42,9 @@
 				{% for option in options %}
 					<input type="{{type}}" class="{{classes}}" id="{{field.name}}{{unique}}{% if fieldValue[0] %}_{{forloop.index0}}{% endif %}" name="{{field.name}}{% if options[1] %}[]{% endif %}" value="{{option.id}}" {% if fieldValue == option.id %}checked="checked"{% elsif fieldValue[0] and fieldValue contains option.id %}checked="checked"{% endif %}><label for="{{field.name}}{{unique}}{% if fieldValue[0] %}_{{forloop.index0}}{% endif %}">{{option.name}}</label>
 				{% endfor %}
+			{% elsif type contains 'datetime' -%}
+				{{label}}
+				<input type="{{type}}" class="{{classes}}" id="{{field.name}}{{unique}}" name="{{field.name}}" value="{{fieldValue | date: '%Y-%m-%dT%H:%M'}}"{{attributes}}>
 			{% else -%}
 				{{label}}
 				<input type="{{type}}" class="{{classes}}" id="{{field.name}}{{unique}}" name="{{field.name}}" value="{{fieldValue}}"{{attributes}}>

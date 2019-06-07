@@ -13,35 +13,18 @@ configuration:
   - Update resource_owner to prevent anyone from creating/updating
   - Fetch users and events to populate dropdowns
 {%- endcomment -%}
+
 {%- graphql collection = "modules/events-basic/get_users_and_events" -%}
 {%- assign events = collection.events.results -%}
 {%- assign users = collection.users.results -%}
 
 {%- form -%}
+
   {%- assign properties = form_builder.fields.properties -%}
 
-  {%- include "modules/helpers/forms/fieldGroup", field: properties.event_id, label: "Event", type: "select", options: events -%}
+  {%- include "modules/helpers/forms/fieldGroup", field: properties.event_id, label: "Event", type: "select", options: events, option_value_property: "id", option_text_property: "title" -%}
 
-  {%- include "modules/helpers/forms/fieldGroup", field: properties.user_id, label: "Users", type: "select", options: users -%}
-
-{%- comment -%}
-  <div>
-    <select name="form[properties_attributes][event_id]" >
-      <option value="">-- Select Event --</option>
-      {% for event in events -%}
-      <option value="{{ event.id }}"{% if properties.event_id.value == event.id %} selected{% endif -%}>{{ event.title }}</option>
-      {% endfor -%}
-    </select>
-  </div>
-  <div>
-    <select name="form[properties_attributes][user_id]" >
-      <option value="">-- Select User --</option>
-      {% for user in users -%}
-      <option value="{{ user.id }}"{% if properties.user_id.value == user.id %} selected{% endif -%}>{{ user.email }}</option>
-      {% endfor -%}
-    </select>
-  </div>
-{%- endcomment -%}
+  {%- include "modules/helpers/forms/fieldGroup", field: properties.user_id, label: "Users", type: "select", options: users, option_value_property: "id", option_text_property: "email" -%}
 
   <div>
     <input type='submit' value='Submit'>
